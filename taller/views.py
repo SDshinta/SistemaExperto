@@ -13,7 +13,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
 
 # Para poder modificar HECHOS y REGLAS globales:
 import sys
@@ -290,5 +289,6 @@ def editar_regla_backward(request, id):
         'valor1': reglas_backward[id]['hecho'],
         'valor2': reglas_backward[id]['conclusion']
     })
+
 
 
