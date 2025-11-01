@@ -1,5 +1,6 @@
 from .models import Regla
 
+
 def motor_inferencia(hechos_usuario):
     # Cargar todas las reglas
     reglas = Regla.objects.all()
@@ -38,11 +39,13 @@ def motor_inferencia(hechos_usuario):
         if puntaje > 0:
             explicacion = explicaciones_humanas.get(conclusion, "")
             hechos_relacionados = hechos_por_conclusion.get(conclusion, [])
-            resultado.append({
-                'conclusion': conclusion,
-                'puntaje': puntaje,
-                'explicacion': explicacion,
-                'hechos': ", ".join(hechos_relacionados)
-            })
+            resultado.append(
+                {
+                    "conclusion": conclusion,
+                    "puntaje": puntaje,
+                    "explicacion": explicacion,
+                    "hechos": ", ".join(hechos_relacionados),
+                }
+            )
 
     return resultado

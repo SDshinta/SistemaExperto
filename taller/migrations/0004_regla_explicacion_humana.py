@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('taller', '0003_alter_regla_peso'),
+        ("taller", "0003_alter_regla_peso"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='regla',
-            name='explicacion_humana',
-            field=models.TextField(blank=True, help_text='Explicación amigable para el usuario', null=True),
+            model_name="regla",
+            name="explicacion_humana",
+            field=models.TextField(
+                blank=True, help_text="Explicación amigable para el usuario", null=True
+            ),
         ),
     ]

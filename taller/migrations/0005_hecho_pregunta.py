@@ -4,16 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('taller', '0004_regla_explicacion_humana'),
+        ("taller", "0004_regla_explicacion_humana"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='hecho',
-            name='pregunta',
-            field=models.CharField(default='Pregunta no especificada', max_length=255),
+            model_name="hecho",
+            name="pregunta",
+            field=models.CharField(default="Pregunta no especificada", max_length=255),
             preserve_default=False,
         ),
     ]

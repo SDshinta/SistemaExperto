@@ -4,26 +4,45 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Hecho',
+            name="Hecho",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('descripcion', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("descripcion", models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
-            name='Regla',
+            name="Regla",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('condicion', models.TextField(help_text="Ej: 'no_enciende and ventilador_no_gira'")),
-                ('conclusion', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "condicion",
+                    models.TextField(
+                        help_text="Ej: 'no_enciende and ventilador_no_gira'"
+                    ),
+                ),
+                ("conclusion", models.CharField(max_length=255)),
             ],
         ),
     ]
