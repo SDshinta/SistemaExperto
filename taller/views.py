@@ -181,7 +181,7 @@ from .backward_motor import backward_chaining
 @login_required
 def backward_inicio(request):
     # Mostrar la lista de conclusiones para elegir
-    conclusiones = list(set(r['conclusion'] for r in REGLAS))  # usa la lista de reglas del backward_motor.py
+    conclusiones = list({r['conclusion'] for r in REGLAS})  # usa la lista de reglas del backward_motor.py
 
     if request.method == 'POST':
         objetivo = request.POST.get('objetivo')
@@ -285,6 +285,7 @@ def editar_regla_backward(request, id):
         'valor1': reglas_backward[id]['hecho'],
         'valor2': reglas_backward[id]['conclusion']
     })
+
 
 
 
