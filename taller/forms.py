@@ -20,7 +20,8 @@ class ReglaForm(forms.ModelForm):
             k: True for k in condicion.replace('and', ' ').replace('or', ' ').split()
         }
         try:
-            eval(condicion, {}, hechos_test)
+            int(condicion, {}, hechos_test)
         except Exception as e:
             raise forms.ValidationError(f"La condición tiene un error de sintaxis: {e}")
         return condicion
+
