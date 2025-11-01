@@ -187,7 +187,7 @@ def backward_inicio(request):
         objetivo = request.POST.get('objetivo')
         respuestas_usuario = {}
         # Recolectar las respuestas de los hechos
-        for hecho_key in HECHOS.keys():
+        for hecho_key in HECHOS:
             respuestas_usuario[hecho_key] = request.POST.get(hecho_key)
 
         confirmado, mensaje = backward_chaining(objetivo, respuestas_usuario)
@@ -285,6 +285,7 @@ def editar_regla_backward(request, id):
         'valor1': reglas_backward[id]['hecho'],
         'valor2': reglas_backward[id]['conclusion']
     })
+
 
 
 
