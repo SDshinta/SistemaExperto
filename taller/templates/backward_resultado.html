@@ -1,0 +1,15 @@
+{% extends 'base_backward.html' %}
+
+{% block content %}
+<h1>Resultado del Diagnóstico</h1>
+
+<h3>Problema evaluado: {{ objetivo }}</h3>
+
+{% if confirmado %}
+  <div class="alert alert-success">{{ mensaje }}</div>
+{% else %}
+  <div class="alert alert-danger">{{ mensaje }}</div>
+{% endif %}
+
+<a href="{% url 'backward_inicio' %}" class="btn btn-secondary">Volver</a>
+{% endblock %}

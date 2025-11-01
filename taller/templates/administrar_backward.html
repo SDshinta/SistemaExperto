@@ -1,0 +1,77 @@
+{% extends "base_backward.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<h1 class="mb-4">Administrar Hechos y Reglas (Backward-Chaining)</h1>
+
+<div class="mb-5">
+  <h3 class="mb-3">Agregar / Editar hecho</h3>
+  <form method="post" class="p-4 border rounded shadow-sm bg-light">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="id_desc" class="form-label">Descripción del hecho</label>
+      {{ hecho_form.descripcion|add_class:"form-control" }}
+      <small class="form-text text-muted">Ejemplo: <code>no_enciende</code></small>
+    </div>
+    <div class="mb-3">
+      <label for="id_preg" class="form-label">Pregunta asociada</label>
+      {{ hecho_form.pregunta|add_class:"form-control" }}
+      <small class="form-text text-muted">Ejemplo: <code>¿El computador no enciende?</code></small>
+    </div>
+    <input type="hidden" name="form_type" value="hecho">
+    <button class="btn btn-success" type="submit">Agregar / Actualizar Hecho</button>
+  </form>
+</div>
+
+<div class="mb-5">
+  <h3 class="mb-3">Agregar / Editar regla</h3>
+  <form method="post" class="p-4 border rounded shadow-sm bg-light">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="id_condicion" class="form-label">Condición (Hecho)</label>
+      {{ regla_form.condicion|add_class:"form-control" }}
+      <small class="form-text text-muted">Ejemplo: <code>no_enciende</code></small>
+    </div>
+    <div class="mb-3">
+      <label for="id_conclusion" class="form-label">Conclusión</label>
+      {{ regla_form.conclusion|add_class:"form-control" }}
+      <small class="form-text text-muted">Ejemplo: <code>Fallo en fuente de poder</code></small>
+    </div>
+    <div class="mb-3">
+      <label for="id_explicacion" class="form-label">Explicación</label>
+      {{ regla_form.explicacion|add_class:"form-control" }}
+      <small class="form-text text-muted">Ejemplo: <code>El equipo no enciende, puede ser la fuente de poder.</code></small>
+    </div>
+    <input type="hidden" name="form_type" value="regla">
+    <button class="btn btn-success" type="submit">Agregar / Actualizar Regla</button>
+  </form>
+</div>
+
+<hr>
+
+<h3>Hechos existentes</h3>
+<ul class="list-group">
+  {% for desc, preg in hechos.items %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div><strong>{{ desc }}</strong>: {{ preg }}</div>
+      <a href="{% url 'eliminar_hecho_backward' desc %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar hecho?')">Eliminar</a>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No hay hechos registrados.</li>
+  {% endfor %}
+</ul>
+
+<h3 class="mt-4">Reglas existentes</h3>
+<ul class="list-group">
+  {% for regla in reglas %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        SI <strong>{{ regla.condicion }}</strong> ENTONCES <strong>{{ regla.conclusion }}</strong><br>
+        <em>{{ regla.explicacion }}</em>
+      </div>
+      <a href="{% url 'eliminar_regla_backward' regla.condicion regla.conclusion %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar regla?')">Eliminar</a>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No hay reglas registradas.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

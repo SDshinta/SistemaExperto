@@ -1,0 +1,34 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<h1 class="mb-4">Diagnóstico de Problemas - Responde Sí o No</h1>
+
+{% if error %}
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+{% endif %}
+
+<form method="post" action="{% url 'diagnosticar' %}">
+    {% csrf_token %}
+    <div class="list-group">
+        {% for hecho in hechos %}
+        <div class="mb-3">
+            <label class="form-label"><strong>{{ hecho.pregunta }}</strong></label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hecho_{{ hecho.id }}" value="si">
+                <label class="form-check-label">Sí</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hecho_{{ hecho.id }}" value="no">
+                <label class="form-check-label">No</label>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4 text-center">
+        <button type="submit" class="btn btn-primary px-5">Diagnosticar</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base_backward.html' %}
+
+{% block content %}
+<h1>Diagnóstico Backward Chaining</h1>
+
+<form method="post">
+  {% csrf_token %}
+  
+  <label for="objetivo">Selecciona la conclusión a diagnosticar:</label>
+  <select name="objetivo" id="objetivo" required>
+    <option value="" disabled selected>-- Elige un problema --</option>
+    {% for c in conclusiones %}
+      <option value="{{ c }}">{{ c }}</option>
+    {% endfor %}
+  </select>
+
+  <hr>
+  <h3>Responde las siguientes preguntas:</h3>
+  
+  {% for key, pregunta in hechos.items %}
+    <div class="mb-3">
+      <label>{{ pregunta }}</label><br>
+      <input type="radio" id="{{ key }}_si" name="{{ key }}" value="si" required>
+      <label for="{{ key }}_si">Sí</label>
+      <input type="radio" id="{{ key }}_no" name="{{ key }}" value="no">
+      <label for="{{ key }}_no">No</label>
+    </div>
+  {% endfor %}
+  
+  <button type="submit" class="btn btn-primary">Diagnosticar</button>
+</form>
+{% endblock %}

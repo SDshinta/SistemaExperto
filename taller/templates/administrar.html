@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<h1 class="mb-4">Administrar Hechos y Reglas</h1>
+
+<div class="mb-5">
+  <h3>Agregar nuevo hecho</h3>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3 row align-items-center">
+      <label for="{{ hecho_form.descripcion.id_for_label }}" class="col-sm-3 col-form-label">{{ hecho_form.descripcion.label }}</label>
+      <div class="col-sm-7">
+        {{ hecho_form.descripcion|add_class:"form-control" }}
+        <small class="form-text text-muted">Ejemplo: no_enciende</small>
+        {{ hecho_form.descripcion.errors }}
+      </div>
+    </div>
+    <div class="mb-3 row align-items-center">
+      <label for="{{ hecho_form.pregunta.id_for_label }}" class="col-sm-3 col-form-label">{{ hecho_form.pregunta.label }}</label>
+      <div class="col-sm-7">
+        {{ hecho_form.pregunta|add_class:"form-control" }}
+        <small class="form-text text-muted">Ejemplo: ¿El computador enciende?</small>
+        {{ hecho_form.pregunta.errors }}
+      </div>
+    </div>
+    <input type="hidden" name="form_type" value="hecho">
+    <div class="text-center">
+      <button class="btn btn-success px-4" type="submit">Agregar Hecho</button>
+    </div>
+  </form>
+</div>
+
+<div class="mb-5">
+  <h3>Agregar nueva regla</h3>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3 row align-items-center">
+      <label for="{{ regla_form.hecho.id_for_label }}" class="col-sm-3 col-form-label">{{ regla_form.hecho.label }}</label>
+      <div class="col-sm-7">
+        {{ regla_form.hecho|add_class:"form-control" }}
+        <small class="form-text text-muted">Ejemplo: no_enciende (debe coincidir con descripción de hecho)</small>
+        {{ regla_form.hecho.errors }}
+      </div>
+    </div>
+    <div class="mb-3 row align-items-center">
+      <label for="{{ regla_form.conclusion.id_for_label }}" class="col-sm-3 col-form-label">{{ regla_form.conclusion.label }}</label>
+      <div class="col-sm-7">
+        {{ regla_form.conclusion|add_class:"form-control" }}
+        <small class="form-text text-muted">Ejemplo: Fallo en fuente de poder</small>
+        {{ regla_form.conclusion.errors }}
+      </div>
+    </div>
+    <div class="mb-3 row align-items-center">
+      <label for="{{ regla_form.peso.id_for_label }}" class="col-sm-3 col-form-label">{{ regla_form.peso.label }}</label>
+      <div class="col-sm-7">
+        {{ regla_form.peso|add_class:"form-control" }}
+        <small class="form-text text-muted">Ejemplo: 1</small>
+        {{ regla_form.peso.errors }}
+      </div>
+    </div>
+    <div class="mb-3 row align-items-center">
+      <label for="{{ regla_form.explicacion_humana.id_for_label }}" class="col-sm-3 col-form-label">{{ regla_form.explicacion_humana.label }}</label>
+      <div class="col-sm-7">
+        {{ regla_form.explicacion_humana|add_class:"form-control" }}
+        <small class="form-text text-muted">Ejemplo: El equipo muestra signos de problemas con la fuente de poder.</small>
+        {{ regla_form.explicacion_humana.errors }}
+      </div>
+    </div>
+    <input type="hidden" name="form_type" value="regla">
+    <div class="text-center">
+      <button class="btn btn-success px-4" type="submit">Agregar Regla</button>
+    </div>
+  </form>
+</div>
+
+<hr>
+
+<h3>Hechos existentes</h3>
+<ul class="list-group">
+  {% for hecho in hechos %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ hecho.descripcion }}
+      <div>
+        <a href="{% url 'editar_hecho' hecho.id %}" class="btn btn-sm btn-warning me-2">Editar</a>
+        <a href="{% url 'eliminar_hecho' hecho.id %}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este hecho?')">Eliminar</a>
+      </div>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No hay hechos registrados.</li>
+  {% endfor %}
+</ul>
+
+<h3 class="mt-4">Reglas existentes</h3>
+<ul class="list-group">
+  {% for regla in reglas %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      SI {{ regla.condicion }} ENTONCES {{ regla.conclusion }}
+      <div>
+        <a href="{% url 'editar_regla' regla.id %}" class="btn btn-sm btn-warning me-2">Editar</a>
+        <a href="{% url 'eliminar_regla' regla.id %}" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta regla?')">Eliminar</a>
+      </div>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No hay reglas registradas.</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

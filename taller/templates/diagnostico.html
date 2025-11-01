@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Resultado del Diagnóstico</h1>
+
+{% if resultado %}
+  <div class="list-group">
+    {% for item in resultado|slice:":3" %}
+      <div class="list-group-item mb-3">
+        <h5>{{ item.conclusion }} <span class="badge bg-primary">Puntaje: {{ item.puntaje }}</span></h5>
+        <p>{{ item.explicacion }}</p>
+        <small><strong>Condiciones detectadas:</strong> {{ item.hechos }}</small>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if resultado|length > 3 %}
+    <div class="d-flex gap-2 mt-3">
+      <button id="toggle-results-btn" class="btn btn-secondary">
+        Ver otros resultados
+      </button>
+      <a href="{% url 'index' %}" class="btn btn-primary">
+        Volver al inicio
+      </a>
+    </div>
+  {% else %}
+    <a href="{% url 'index' %}" class="btn btn-primary mt-3">
+      Volver al inicio
+    </a>
+  {% endif %}
+
+  <div id="extra-results" class="list-group mt-3" style="display: none;">
+    {% for item in resultado|slice:"3:" %}
+      <div class="list-group-item mb-3">
+        <h5>{{ item.conclusion }} <span class="badge bg-primary">Puntaje: {{ item.puntaje }}</span></h5>
+        <p>{{ item.explicacion }}</p>
+        <small><strong>Condiciones detectadas:</strong> {{ item.hechos }}</small>
+      </div>
+    {% endfor %}
+  </div>
+
+{% else %}
+  <div class="alert alert-warning">
+    No se pudo determinar ninguna conclusión con los hechos seleccionados.
+  </div>
+  <a href="{% url 'index' %}" class="btn btn-primary mt-4">
+    Volver al inicio
+  </a>
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById('toggle-results-btn');
+    const extraResults = document.getElementById('extra-results');
+
+    if (btn) {
+      btn.addEventListener('click', function() {
+        if (extraResults.style.display === 'none') {
+          extraResults.style.display = 'block';
+          btn.textContent = 'Ocultar otros resultados';
+        } else {
+          extraResults.style.display = 'none';
+          btn.textContent = 'Ver otros resultados';
+        }
+      });
+    }
+  });
+</script>
+
+{% endblock %}

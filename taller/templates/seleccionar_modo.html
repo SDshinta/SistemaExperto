@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center mb-4">Selecciona el modo de diagnóstico</h2>
+
+<div class="d-flex justify-content-center gap-4">
+    <a href="{% url 'index' %}" class="btn btn-primary btn-lg">
+        Encadenamiento hacia adelante
+    </a>
+    <a href="{% url 'backward_inicio' %}" class="btn btn-secondary btn-lg">
+        Encadenamiento hacia atrás
+    </a>
+    
+</div>
+{% endblock %}

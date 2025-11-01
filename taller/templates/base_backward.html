@@ -1,0 +1,43 @@
+<!-- templates/base_backward.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Experto - Backward</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">Backward-Chaining</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'backward_inicio' %}">Diagnóstico</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'administrar_backward' %}">Administrar</a>
+              </li>
+              <li class="nav-item">
+                  
+              </li>
+            </ul>
+            <form action="{% url 'logout' %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link nav-link text-warning" style="padding: 0; border: none;">Cerrar sesión</button>
+              </form>
+          </div>
+        </div>
+      </nav>
+      
+<div class="container mt-4">
+  {% block content %}
+  {% endblock %}
+</div>
+
+</body>
+</html>
