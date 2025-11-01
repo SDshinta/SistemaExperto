@@ -171,16 +171,12 @@ def eliminar_regla(request, id):
     regla.delete()
     return redirect('administrar')
 
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def seleccionar_modo(request):
     return render(request, 'seleccionar_modo.html')
 
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from .backward_motor import backward_chaining, HECHOS, REGLAS
+from .backward_motor import backward_chaining
 
 @login_required
 def backward_inicio(request):
@@ -289,6 +285,7 @@ def editar_regla_backward(request, id):
         'valor1': reglas_backward[id]['hecho'],
         'valor2': reglas_backward[id]['conclusion']
     })
+
 
 
 
